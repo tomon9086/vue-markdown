@@ -7,37 +7,20 @@
 
 <script>
 	const marked = require("marked")
-
-	class Debounce {
-		constructor() {
-			this._timeoutId = null
-			return this
-		}
-		call(f, ms) {
-			if(this._timeoutId !== null) clearTimeout(this._timeoutId)
-			this._timeoutId = setTimeout(f, ms)
-		}
-	}
-
-	const debounce = new Debounce()
+	const debounce = require("lodash.debounce")
 
 	module.exports = {
 		components: {
 		},
 		data() {
 			return {
-				input: "# hello",
-				_updateInterval: 300,
-				_lastUpdate: 0
+				input: "# hello"
 			}
 		},
 		methods: {
-			update(e) {
-				debounce.call(() => {
-					this.input = e.target.value
-					console.log("called!")
-				}, 300)
-			}
+			update: debounce(function(e) {
+				this.input = e.target.value
+			}, 300)
 		},
 		computed: {
 			compiledMarkdown() {

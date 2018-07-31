@@ -6,19 +6,11 @@
 </template>
 
 <script>
-	const marked = require("marked")
+	const MarkdownIt = require("markdown-it")
 	const katex = require("katex")
 	const debounce = require("lodash.debounce")
 
-	const mdrender = new marked.Renderer()
-	const mdlexer = new marked.Lexer()
-	mdlexer.rules.katex = /\$\$?.+\$\$?/
-	// mdrender.text = function(text) {
-	// 	const escapedText = text.toLowerCase().replace(/\$\$?.+\$\$?/g, "-")
-	// 	text = text.replace(/\$/g, "")
-	// 	// console.log(katex.renderToString(text))
-	// 	return `<span>${ text }</span>`
-	// }
+	const md = new MarkdownIt()
 
 	module.exports = {
 		components: {
@@ -35,8 +27,8 @@
 		},
 		computed: {
 			compiledMarkdown() {
-				console.log(marked.lexer(this.input))
-				return marked(this.input, { renderer: mdrender, sanitize: true })
+				// console.log(marked.lexer(this.input))
+				return md.render(this.input)
 			}
 		}
 	}

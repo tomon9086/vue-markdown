@@ -7,9 +7,18 @@
 
 <script>
 	const marked = require("marked")
+	const katex = require("katex")
 	const debounce = require("lodash.debounce")
 
-	marked.setOptions({ gfm: true })
+	const mdrender = new marked.Renderer()
+	const mdlexer = new marked.Lexer()
+	mdlexer.rules.katex = /\$\$?.+\$\$?/
+	// mdrender.text = function(text) {
+	// 	const escapedText = text.toLowerCase().replace(/\$\$?.+\$\$?/g, "-")
+	// 	text = text.replace(/\$/g, "")
+	// 	// console.log(katex.renderToString(text))
+	// 	return `<span>${ text }</span>`
+	// }
 
 	module.exports = {
 		components: {
@@ -26,7 +35,8 @@
 		},
 		computed: {
 			compiledMarkdown() {
-				return marked(this.input, { sanitize: true })
+				console.log(marked.lexer(this.input))
+				return marked(this.input, { renderer: mdrender, sanitize: true })
 			}
 		}
 	}

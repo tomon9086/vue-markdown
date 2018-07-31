@@ -27,7 +27,6 @@
 		},
 		computed: {
 			compiledMarkdown() {
-				// console.log(marked.lexer(this.input))
 				return md.render(this.input)
 			}
 		}

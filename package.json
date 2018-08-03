@@ -5,9 +5,9 @@
     "parcel-plugin-vue": "^1.5.0"
   },
   "dependencies": {
-    "katex": "^0.10.0-beta",
     "lodash.debounce": "^4.0.8",
     "markdown-it": "^8.4.2",
+    "markdown-it-katex": "^2.0.3",
     "vue": "^2.5.13",
     "vue-router": "^3.0.1",
     "vuex": "^3.0.1"

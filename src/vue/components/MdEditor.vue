@@ -6,11 +6,25 @@
 </template>
 
 <script>
-	const MarkdownIt = require("markdown-it")
+	const marked = require("marked")
+	const katex = require("katex")
 	const debounce = require("lodash.debounce")
 
-	const md = new MarkdownIt()
-	md.use(require("markdown-it-katex"), {"throwOnError" : false, "errorColor" : "#cc0000"})
+	const katex_opt = {"throwOnError" : false, "errorColor" : "#cc0000"}
+
+	const mdrender = new marked.Renderer()
+	const mdlexer = new marked.Lexer()
+	mdlexer.rules.katex = /\$\$?.+\$\$?/
+	// mdrender.text = function(text) {
+	mdrender.paragraph = function(text) {
+		// const escapedText = text.toLowerCase().replace(/\$\$?.+\$\$?/g, "-")
+		const escapedText = text.match(/\$\$?(.+)\$\$?/g)
+		console.log(text)
+		if(!escapedText) return text
+		text = text.replace(/\$/g, "")
+		// console.log(katex.renderToString(text))
+		return `<span>${ katex.renderToString(text) }</span>`
+	}
 
 	module.exports = {
 		components: {
@@ -27,8 +41,8 @@
 		},
 		computed: {
 			compiledMarkdown() {
-				// console.log(this.input)
-				return md.render(this.input)
+				console.log(marked.lexer(this.input))
+				return marked(this.input, { renderer: mdrender, sanitize: true })
 			}
 		}
 	}

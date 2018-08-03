@@ -2,10 +2,10 @@
 ## Usage
 
 #### 1. install packages
-install "markdown-it", "lodash.debounce", and "markdown-it-katex"
+install "marked", "lodash.debounce", and "katex"
 
 ```shell
-$ npm install --save markdown-it lodash.debounce markdown-it-katex
+$ npm install --save marked lodash.debounce katex
 ```
 
 #### 2. add KaTeX CSS to your index.html
